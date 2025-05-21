@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Big Data in Audit & Compliance: Interactive Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices: 
+        - Executive Summary: Prominent text. Goal: Inform.
+        - Challenges (Limitations & Pain Points): Interactive accordion/cards. Goal: Inform.
+        - AI/ML Models: Cards for each model type. Goal: Organize/Inform.
+        - Platforms & Tools Table: HTML table, styled for readability. Goal: Compare/Inform. (VERY IMPORTANT)
+        - ERP Integration: Textual explanation. Goal: Inform.
+        - Technical Requirements Table: HTML table. Goal: Inform.
+        - IT/Data Team Roles: Bulleted list/cards. Goal: Inform.
+        - Data Governance: Bulleted list. Goal: Inform.
+        - Collaboration Models & RACI: Text and HTML table. Goal: Organize/Inform.
+        - Case Studies: Summarized text. Goal: Inform.
+        - Recommended Next Steps (Pilot): Numbered list/steps. Goal: Inform/Organize.
+        - Pilot Use Cases Table: HTML table. Goal: Compare/Inform.
+        - Chart 1 (Bar): Limitations of Traditional Audit. Data: Qualitative scores derived from report. Goal: Compare. Lib: Chart.js.
+        - Chart 2 (Donut): Pilot Use Case Focus. Data: Derived from "Relevance" in report's matrix. Goal: Inform/Compare. Lib: Chart.js.
+        All textual content adapted from the report for conciseness and presented within the designed interactive structure.
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar { transition: transform 0.3s ease-in-out; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (max-width: 768px) { .chart-container { height: 300px; max-height: 350px;} }
+        .table-container { max-width: 100%; overflow-x: auto; }
+        .tooltip { position: relative; display: inline-block; cursor: pointer; }
+        .tooltip .tooltiptext { visibility: hidden; width: 200px; background-color: #555; color: #fff; text-align: center; border-radius: 6px; padding: 5px 0; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -100px; opacity: 0; transition: opacity 0.3s; font-size: 0.875rem; }
+        .tooltip:hover .tooltiptext { visibility: visible; opacity: 1; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .accordion-button.active + .accordion-content { max-height: 1000px; /* Adjust as needed */ }
+        /* Custom scrollbar for table container */
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .table-container::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        .table-container::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Ensure long words in table break */
+        table td, table th {
+           word-break: break-word;
+           hyphens: auto;
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800 flex">
+
+    <aside id="sidebar" class="bg-sky-700 text-white w-64 min-h-screen p-4 space-y-2 fixed top-0 left-0 z-40 transform -translate-x-full md:translate-x-0 md:relative">
+        <h1 class="text-2xl font-bold mb-6">AI in Audit</h1>
+        <nav>
+            <a href="#executive-summary" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-sky-600 nav-link">Executive Summary</a>
+            <a href="#challenges" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-sky-600 nav-link">The Challenge</a>
+            <a href="#ai-solutions" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-sky-600 nav-link">AI-Powered Transformation</a>
+            <a href="#technical-backbone" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-sky-600 nav-link">Technical Backbone</a>
+            <a href="#collaboration-roadmap" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-sky-600 nav-link">Collaboration & Roadmap</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+        <button id="menu-button" class="md:hidden fixed top-4 right-4 bg-sky-600 text-white p-2 rounded-md z-50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+
+        <section id="executive-summary" class="content-section active">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6">Executive Summary</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <p class="mb-4">This interactive analysis explores the transformative potential of modern Artificial Intelligence (AI) and Big Data technologies for a $20 billion global metal service distribution company. The company operates with 300 locations and 75 independent brands, each utilizing separate Enterprise Resource Planning (ERP) systems. The goal is to shift from traditional, periodic, manual internal audit and accounting control practices to a more continuous, automated, and data-driven anomaly detection framework.</p>
+                <p class="mb-4">Traditional methods are ill-equipped for this complex, fragmented landscape. AI and Big Data offer a paradigm shift, enabling analysis of 100% of transactional data for real-time anomaly detection, proactive fraud identification, and continuous compliance monitoring. Leading platforms include MindBridge, CaseWare IDEA, Alteryx, AuditBoard, Workiva, and Diligent HighBond.</p>
+                <p class="mb-4">A critical challenge is data integration from 75 diverse ERPs. Success requires robust data pipelines, a centralized data repository, stringent security, and strong data governance. Collaboration among Internal Audit, Finance, and Corporate IT/Data teams is paramount.</p>
+                <p>The recommended path is a phased approach, starting with a pilot program focusing on a high-impact use case (e.g., Procure-to-Pay anomalies or Journal Entry testing) with a small subset of ERPs. This will validate technology, data integration strategies, and refine change management.</p>
+            </div>
+        </section>
+
+        <section id="challenges" class="content-section">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6">The Challenge: Current State of Audit & Controls</h2>
+            <p class="mb-6 text-lg text-stone-700">Traditional internal audit and accounting control practices face significant limitations in large, decentralized corporations, especially those with numerous independent brands and disparate ERP systems. These challenges compound risk and reduce efficiency.</p>
+
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-sky-600 mb-3">Limitations of Traditional Audit Practices</h3>
+                    <ul class="list-disc list-inside space-y-2 text-stone-700">
+                        <li><strong>Reliance on Manual Processes & Human Error:</strong> Decentralized manual tasks across 75 brands elevate error risk.</li>
+                        <li><strong>Limited Scope & Sample-Based Testing:</strong> Most transactions are never reviewed, creating blind spots for fraud or errors.</li>
+                        <li><strong>Lack of Real-Time Insights:</strong> Retrospective audits are ill-suited for a dynamic $20 billion enterprise.</li>
+                        <li><strong>Inconsistent Controls & Lack of Standardization:</strong> Operational autonomy leads to varied control frameworks.</li>
+                        <li><strong>Data Overload & Audit Fatigue:</strong> Overwhelming data can lead to missed critical issues.</li>
+                        <li><strong>Insufficient Resources & Misallocation:</strong> Budgetary limits can result in under-controlled risks.</li>
+                    </ul>
+                    <div class="mt-4 chart-container">
+                        <canvas id="limitationsChart"></canvas>
+                    </div>
+                    <p class="mt-2 text-sm text-center text-stone-500">Conceptual impact of traditional audit limitations.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-sky-600 mb-3">Pain Points of Discrete, Multi-ERP Auditing (75 ERPs)</h3>
+                     <p class="mb-4 text-stone-700">Auditing an enterprise with 75 distinct ERP systems introduces unique and significant pain points:</p>
+                    <div id="painPointsAccordion" class="space-y-2">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-solutions" class="content-section">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6">AI-Powered Transformation</h2>
+            <p class="mb-6 text-lg text-stone-700">AI and Big Data technologies offer a revolutionary approach to monitoring accounting controls and conducting internal audits, shifting towards a proactive, comprehensive, and continuous model.</p>
+
+            <div class="mb-8">
+                <div class="sm:hidden">
+                    <label for="tabs" class="sr-only">Select a tab</label>
+                    <select id="tabs-select" class="block w-full rounded-md border-stone-300 focus:border-sky-500 focus:ring-sky-500">
+                        <option selected>AI/ML Models</option>
+                        <option>Platforms & Tools</option>
+                        <option>ERP & Data Warehouse Integration</option>
+                    </select>
+                </div>
+                <div class="hidden sm:block">
+                    <nav class="flex space-x-4 border-b border-stone-300 mb-6" aria-label="Tabs">
+                        <button data-tab="ai-models" class="tab-button active-tab whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-sky-500 text-sky-600">
+                            AI/ML Models
+                        </button>
+                        <button data-tab="platforms-tools" class="tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Platforms & Tools (Vendor Analysis)
+                        </button>
+                        <button data-tab="erp-integration" class="tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            ERP & Data Warehouse Integration
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <div id="ai-models" class="tab-content active-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">AI/ML Models for Continuous Auditing</h3>
+                <p class="mb-4 text-stone-700">Various AI and Machine Learning models enhance auditing by enabling sophisticated data analysis, pattern recognition, and anomaly detection:</p>
+                <div class="grid md:grid-cols-2 gap-6" id="aiMlModelsContainer">
+                    </div>
+            </div>
+
+            <div id="platforms-tools" class="tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Leading Platforms & Tools (Vendor Analysis)</h3>
+                <p class="mb-4 text-stone-700">The market offers diverse AI and Big Data solutions for audit and compliance. A key consideration for your organization (with 75 ERPs) is the platform's ability to ingest, map, normalize, and analyze data from these varied sources. <strong class="text-red-600">This vendor information is critical.</strong></p>
+                <p class="mb-4 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Critical Note:</strong> While many vendors claim broad ERP integration, handling 75 diverse ERPs for continuous transactional analysis is a significant challenge. Specific case studies for such complex environments are rare. Due diligence is crucial.
+                </p>
+                <div class="table-container bg-white p-1 rounded-lg shadow-lg overflow-x-auto">
+                    <table class="min-w-full divide-y divide-stone-200" id="vendorComparisonTable">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Feature Category</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">MindBridge</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">CaseWare (IDEA, Alessa)</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Alteryx</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">AuditBoard</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Workiva</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Diligent (HighBond)</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">SAP GRC</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Trullion</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Azure Synapse Analytics</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-200 bg-white">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="erp-integration" class="tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">ERP & Data Warehouse Integration</h3>
+                <p class="mb-4 text-stone-700">Successful AI-driven auditing across 75 ERPs depends on a robust data integration strategy. This involves extracting, transforming, and loading data into a usable state for analytics tools.</p>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow"><strong>Direct Connectors:</strong> Pre-built for popular ERPs, but unlikely to cover all 75 diverse systems.</div>
+                    <div class="bg-white p-4 rounded-lg shadow"><strong>API-Based Integration:</strong> Offers flexibility for custom integrations but requires development effort.</div>
+                    <div class="bg-white p-4 rounded-lg shadow"><strong>ETL/ELT Processes:</strong> Essential for ERPs lacking APIs/connectors, involving data extraction, transformation, and loading.</div>
+                    <div class="bg-white p-4 rounded-lg shadow"><strong>Centralized Data Warehouses/Lakes:</strong> Foundational for consolidating data from 75 ERPs before audit analysis (e.g., Azure Synapse, Snowflake).</div>
+                    <div class="bg-white p-4 rounded-lg shadow"><strong>Data Mapping & Normalization:</strong> Critical and challenging; involves mapping disparate data elements (charts of accounts, etc.) to a common model.</div>
+                    <div class="bg-white p-4 rounded-lg shadow"><strong>Cloud & On-Premise Sources:</strong> Strategy must handle data from both types of ERPs.</div>
+                </div>
+                 <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Key Challenge:</strong> Mapping 75 unique charts of accounts and other critical data elements to a unified standard underscores the need for a strong Master Data Management (MDM) strategy.
+                </p>
+            </div>
+        </section>
+
+        <section id="technical-backbone" class="content-section">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6">Technical Backbone for Continuous Auditing</h2>
+            <p class="mb-6 text-lg text-stone-700">A continuous, AI-driven auditing model across 75 ERPs requires a formidable technical infrastructure that is scalable, secure, and capable of handling vast, diverse data.</p>
+
+            <div class="mb-8">
+                <div class="sm:hidden">
+                     <label for="tech-tabs-select" class="sr-only">Select a tab</label>
+                    <select id="tech-tabs-select" class="block w-full rounded-md border-stone-300 focus:border-sky-500 focus:ring-sky-500">
+                        <option selected>Key Technical Requirements</option>
+                        <option>Role of IT & Data Teams</option>
+                        <option>Data Governance & Security</option>
+                    </select>
+                </div>
+                <div class="hidden sm:block">
+                    <nav class="flex space-x-4 border-b border-stone-300 mb-6" aria-label="Tabs">
+                        <button data-tab="tech-requirements" class="tech-tab-button active-tab whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-sky-500 text-sky-600">
+                            Key Technical Requirements
+                        </button>
+                        <button data-tab="it-data-roles" class="tech-tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Role of IT & Data Teams
+                        </button>
+                        <button data-tab="data-governance" class="tech-tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Data Governance, Quality & Security
+                        </button>
+                    </nav>
+                </div>
+            </div>
+            
+            <div id="tech-requirements" class="tech-tab-content active-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Key Technical Requirements for Scalability</h3>
+                <p class="mb-4 text-stone-700">The unique environment of 75 independent ERPs amplifies the importance of several key technical requirements:</p>
+                <ul class="list-disc list-inside space-y-3 mb-6 text-stone-700">
+                    <li><strong>Robust Data Pipelines:</strong> Automated, resilient, scalable for continuous data ingestion from 75 ERPs.</li>
+                    <li><strong>Scalable Data Storage (Data Warehouse/Lakehouse):</strong> Central, high-performance storage (e.g., Azure Synapse, Snowflake) for massive transaction volumes.</li>
+                    <li><strong>Cloud vs. On-Premise Strategy:</strong> Strategic decision; cloud offers scalability, but hybrid may be practical.</li>
+                    <li><strong>Strong Access Controls & Security:</strong> Granular RBAC, encryption (at rest & in transit), detailed audit trails.</li>
+                    <li><strong>Advanced Data Transformation & Normalization:</strong> Powerful tools to standardize data from diverse ERPs to a common model.</li>
+                    <li><strong>Robust APIs & Integration:</strong> For integration with GRC, BI, incident management, and IAM systems.</li>
+                    <li><strong>Comprehensive Monitoring & Alerting:</strong> For pipeline health, data freshness, system status, and critical anomaly alerts.</li>
+                </ul>
+                <div class="table-container bg-white p-1 rounded-lg shadow-lg overflow-x-auto">
+                    <table class="min-w-full divide-y divide-stone-200" id="techRequirementsTable">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Requirement Category</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Specific Requirement</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Importance (75 ERPs)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-200 bg-white">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="it-data-roles" class="tech-tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Role of Corporate IT & Data & Analytics Teams</h3>
+                <p class="mb-4 text-stone-700">Successful implementation relies heavily on Corp IT and Data & Analytics teams, whose roles extend beyond traditional support:</p>
+                <ul class="list-disc list-inside space-y-3 text-stone-700">
+                    <li><strong>Data Infrastructure Development & Maintenance:</strong> Architecting and managing data pipelines, central data warehouse/lakehouse.</li>
+                    <li><strong>System Integration:</strong> Integrating audit platform with 75 ERPs and other enterprise systems (IAM, BI, GRC).</li>
+                    <li><strong>Data Security & Access Management:</strong> Implementing RBAC, encryption, threat monitoring.</li>
+                    <li><strong>Technical Support & Troubleshooting:</strong> For the platform, pipelines, and data repository.</li>
+                    <li><strong>Data Governance & Quality Assurance:</strong> Partnering to operationalize data governance, enforce quality standards.</li>
+                    <li><strong>Change Management & Training Support:</strong> Assisting with deployment, user onboarding, technical training.</li>
+                    <li><strong>AI/ML Model Management Expertise:</strong> Potentially training, validating, and monitoring AI models.</li>
+                </ul>
+                 <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Strategic Shift:</strong> Corp IT must evolve from system maintenance to enabling a strategic, data-driven audit and finance function. "Data translators" bridging business and technical teams will be vital.
+                </p>
+            </div>
+
+            <div id="data-governance" class="tech-tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Data Governance, Quality & Security Challenges</h3>
+                <p class="mb-4 text-stone-700">Effectiveness depends on robust data governance, high quality, and stringent security:</p>
+                <ul class="list-disc list-inside space-y-3 text-stone-700">
+                    <li><strong>Unified Data Governance Framework:</strong> Essential for consistency, quality, security, and compliance across 75 brands. Defines ownership, standards, lifecycle.</li>
+                    <li><strong>Data Quality Management Strategy:</strong> Proactive profiling, cleansing, validation, and monitoring. "Garbage in, garbage out" applies especially to AI.</li>
+                    <li><strong>Data Security & Privacy by Design:</strong> Encryption, MFA, RBAC, data masking. Adherence to GDPR, CCPA across 300 global locations.</li>
+                    <li><strong>Data Lineage & Auditability:</strong> Traceability from source ERP to AI insight for validation and troubleshooting.</li>
+                    <li><strong>AI Model Bias & Explainability:</strong> Ensuring models aren't biased by input data and that AI findings are transparent.</li>
+                    <li><strong>Data Retention & Archival Policies:</strong> Clear policies considering regulatory needs and storage costs.</li>
+                </ul>
+                 <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Virtuous Cycle:</strong> AI can also improve data governance by assisting in automated data discovery, profiling, and quality monitoring.
+                </p>
+            </div>
+        </section>
+
+        <section id="collaboration-roadmap" class="content-section">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6">Collaboration & Strategic Roadmap</h2>
+            <p class="mb-6 text-lg text-stone-700">Transforming to AI-driven continuous auditing is a significant business change requiring deep collaboration and a phased strategic approach.</p>
+            
+            <div class="mb-8">
+                 <div class="sm:hidden">
+                     <label for="collab-tabs-select" class="sr-only">Select a tab</label>
+                    <select id="collab-tabs-select" class="block w-full rounded-md border-stone-300 focus:border-sky-500 focus:ring-sky-500">
+                        <option selected>Collaboration Models</option>
+                        <option>Roles & Responsibilities (RACI)</option>
+                        <option>Case Studies</option>
+                        <option>Recommended Next Steps</option>
+                        <option>Pilot Use Cases</option>
+                    </select>
+                </div>
+                <div class="hidden sm:block">
+                    <nav class="flex flex-wrap space-x-4 border-b border-stone-300 mb-6" aria-label="Tabs">
+                        <button data-tab="collab-models" class="collab-tab-button active-tab whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-sky-500 text-sky-600">
+                            Collaboration Models
+                        </button>
+                        <button data-tab="raci-matrix" class="collab-tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Roles & Responsibilities (RACI)
+                        </button>
+                         <button data-tab="case-studies" class="collab-tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Case Studies & Learnings
+                        </button>
+                        <button data-tab="next-steps" class="collab-tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Recommended Next Steps
+                        </button>
+                        <button data-tab="pilot-cases" class="collab-tab-button whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm border-transparent text-stone-500 hover:text-stone-700 hover:border-stone-300">
+                            Pilot Use Cases
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <div id="collab-models" class="collab-tab-content active-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Models for Effective Collaboration</h3>
+                <p class="mb-4 text-stone-700">Fostering teamwork among Internal Audit, Finance, IT/Data teams, and brand-level stakeholders is critical:</p>
+                <ul class="list-disc list-inside space-y-3 text-stone-700">
+                    <li><strong>Cross-Functional Steering Committee & Working Groups:</strong> For strategic direction, resource allocation, and resolving roadblocks. Co-chaired by executives (Jefferson, Yuka).</li>
+                    <li><strong>Agile Methodologies (Scrum/Kanban):</strong> For iterative development, continuous feedback, and adaptability.</li>
+                    <li><strong>Regular Communication & Shared Platforms:</strong> For transparency and alignment (status meetings, shared docs).</li>
+                    <li><strong>Shared Objectives & KPIs:</strong> Common goals and metrics foster shared ownership.</li>
+                    <li><strong>Dedicated Data Governance Council:</strong> For strategic data decisions (standards, quality, access).</li>
+                    <li><strong>Centers of Excellence (CoE) for Analytics/AI:</strong> For long-term capability building and promoting best practices.</li>
+                </ul>
+                 <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Trust is Key:</strong> Building trust among teams regarding AI outputs and data reliability is paramount. Active collaboration with the 75 brands is needed for data gathering and local context.
+                </p>
+            </div>
+
+            <div id="raci-matrix" class="collab-tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Defining Roles & Responsibilities (RACI Matrix)</h3>
+                <p class="mb-4 text-stone-700">A RACI (Responsible, Accountable, Consulted, Informed) matrix clarifies roles in this complex project.</p>
+                <div class="table-container bg-white p-1 rounded-lg shadow-lg overflow-x-auto">
+                    <table class="min-w-full divide-y divide-stone-200" id="raciTable">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Task/Activity</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Internal Audit</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Finance (Corp)</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Corp IT</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Data & Analytics</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Brand Liaisons</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Exec. Sponsors</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-200 bg-white">
+                            </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-sm text-stone-600"><strong>Legend:</strong> R = Responsible, A = Accountable, C = Consulted, I = Informed.</p>
+                 <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Evolution of Roles:</strong> This initiative requires upskilling. Auditors become more data-literate, Finance more involved in automated control design, and IT/Data teams become key GRC enablers. Identifying specific Process Owners in Finance is also vital.
+                </p>
+            </div>
+            
+            <div id="case-studies" class="collab-tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Case Studies & Relevant Learnings</h3>
+                <p class="mb-4 text-stone-700">While AI-driven continuous auditing across 75 disparate ERPs is novel, insights from related large-scale projects are valuable:</p>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-sky-700">Financial Services Firm (ML Audit):</h4>
+                        <p class="text-sm text-stone-600">Improved model accuracy by 15% by addressing data quality, enhancing stakeholder confidence. Underscores data governance link to AI effectiveness.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-sky-700">Manufacturing MNC (ERP Implementation):</h4>
+                        <p class="text-sm text-stone-600">Culturally sensitive training and inclusive communication were key for user acceptance across diverse regions. Relevant for rolling out solutions to 75 independent brands.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h4 class="font-semibold text-sky-700">MNCs (Financial Consolidation):</h4>
+                        <p class="text-sm text-stone-600">Successfully reduced consolidation time and improved accuracy by implementing systems to aggregate data from various ERPs, using mapping tools, and standardizing data. Analogous to data prep needed for AI audit.</p>
+                    </div>
+                </div>
+                <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Key Takeaways:</strong> Harmonizing data from multiple ERPs is a critical precursor. The "human element" (change management, communication) is vital. Continuous auditing and monitoring can be complementary, increasing overall ROI.
+                </p>
+            </div>
+
+            <div id="next-steps" class="collab-tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Recommended Next Steps: Initiating a Pilot Program</h3>
+                <p class="mb-4 text-stone-700">A phased, strategic approach is essential. A pilot program or Proof of Concept (PoC) offers a controlled environment to test assumptions, validate technology, and demonstrate value.</p>
+                <ol class="list-decimal list-inside space-y-4 text-stone-700">
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <strong class="text-sky-700">Establish Cross-Functional Steering Committee & Dedicated Pilot Team:</strong>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-sm">
+                            <li>Steering Committee: Senior execs (Jefferson, Yuka), leaders from IT, Finance, Audit, and pilot brands for strategic oversight.</li>
+                            <li>Pilot Team: Hands-on members from Audit, Finance (Corporate & Brand), IT/Data & Analytics for execution.</li>
+                        </ul>
+                    </li>
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <strong class="text-sky-700">Define Clear Objectives, Scope, and Success Metrics (KPIs) for the Pilot:</strong>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-sm">
+                            <li>Objectives: SMART goals (e.g., validate integration of 3-5 ERPs, test AI tool effectiveness, quantify efficiency gains).</li>
+                            <li>Scope: Manageable number of entities/ERPs (3-5), 1-2 business processes, defined data scope, 3-6 month duration.</li>
+                            <li>KPIs: Technical (data ingestion), Audit/Control (anomaly detection rates), Business/Financial (cost savings), User Adoption.</li>
+                        </ul>
+                    </li>
+                    <li class="bg-white p-4 rounded-lg shadow">
+                        <strong class="text-sky-700">Select High-Impact, Manageable Use Case & Relevant Data Sources (Incorporate Vendor Shortlisting & PoC):</strong>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-sm">
+                            <li>Select use case (see next tab). Secure data access from pilot brands.</li>
+                            <li>Shortlist 2-3 vendors. Conduct focused PoCs with anonymized sample data to test capabilities.</li>
+                        </ul>
+                    </li>
+                </ol>
+                 <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Pilot Focus:</strong> The primary technical hurdle and learning objective is assessing the practicalities of data extraction, mapping, and normalization from a diverse subset of ERPs. The pilot also tests change management.
+                </p>
+            </div>
+
+            <div id="pilot-cases" class="collab-tab-content">
+                <h3 class="text-2xl font-semibold text-sky-600 mb-4">Candidate Use Cases for Initial Pilot Testing</h3>
+                <p class="mb-4 text-stone-700">Selection should balance high-risk/high-volume areas, data structure, anomaly definition, quantifiable benefits, and representativeness of enterprise issues.</p>
+                <div class="chart-container mb-8">
+                    <canvas id="pilotFocusChart"></canvas>
+                </div>
+                <p class="mb-2 text-sm text-center text-stone-500">Conceptual focus for pilot use cases based on strategic relevance.</p>
+                <div class="table-container bg-white p-1 rounded-lg shadow-lg overflow-x-auto">
+                     <table class="min-w-full divide-y divide-stone-200" id="pilotCasesTable">
+                        <thead class="bg-stone-50">
+                            <tr>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Use Case</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Key Risks Addressed</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Potential Benefits</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">ERP Integration Complexity (Pilot)</th>
+                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-stone-900">Relevance to Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-200 bg-white">
+                            </tbody>
+                    </table>
+                </div>
+                <p class="mt-6 text-stone-600 bg-sky-100 border-l-4 border-sky-500 p-4 rounded-md">
+                    <strong>Decision Point:</strong> The Steering Committee should use a risk/benefit analysis to select the pilot use case(s). "Intercompany Transactions" is complex but highly strategic. P2P or JE testing are more standard starting points.
+                </p>
+            </div>
+        </section>
+    </main>
+
+<script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentSections = document.querySelectorAll('.content-section');
+    const menuButton = document.getElementById('menu-button');
+    const sidebar = document.getElementById('sidebar');
+
+    function setActiveSection(hash) {
+        contentSections.forEach(section => {
+            if (('#' + section.id) === hash) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+        // Highlight active nav link
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === hash) {
+                link.classList.add('bg-sky-800', 'font-semibold');
+            } else {
+                link.classList.remove('bg-sky-800', 'font-semibold');
+            }
+        });
+    }
+    
+    // Initial section activation based on hash or default
+    const initialHash = window.location.hash || '#' + contentSections[0].id;
+    setActiveSection(initialHash);
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // e.preventDefault(); // Keep default behavior to update URL hash
+            const targetId = link.getAttribute('href');
+            setActiveSection(targetId);
+            if (window.innerWidth < 768) { // md breakpoint
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+    });
+    
+    window.addEventListener('hashchange', () => {
+        setActiveSection(window.location.hash);
+    });
+
+    menuButton.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (event) => {
+        if (window.innerWidth < 768 && !sidebar.contains(event.target) && !menuButton.contains(event.target) && !sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.add('-translate-x-full');
+        }
+    });
+
+    // Tab functionality
+    function setupTabs(tabButtonClass, tabContentClass, tabsSelectId) {
+        const tabButtons = document.querySelectorAll('.' + tabButtonClass);
+        const tabContents = document.querySelectorAll('.' + tabContentClass);
+        const tabsSelect = document.getElementById(tabsSelectId);
+
+        function activateTab(targetId) {
+            tabContents.forEach(content => {
+                content.style.display = content.id === targetId ? 'block' : 'none';
+            });
+            tabButtons.forEach(button => {
+                if (button.dataset.tab === targetId) {
+                    button.classList.add('active-tab', 'border-sky-500', 'text-sky-600');
+                    button.classList.remove('border-transparent', 'text-stone-500', 'hover:text-stone-700', 'hover:border-stone-300');
+                } else {
+                    button.classList.remove('active-tab', 'border-sky-500', 'text-sky-600');
+                    button.classList.add('border-transparent', 'text-stone-500', 'hover:text-stone-700', 'hover:border-stone-300');
+                }
+            });
+            if (tabsSelect) {
+                 // Find the option that corresponds to the targetId and set it as selected
+                const optionToSelect = Array.from(tabsSelect.options).find(opt => {
+                    // Assuming option text or a data attribute maps to targetId
+                    // For this example, let's assume option text matches the button's text content for the targetId
+                    const matchingButton = Array.from(tabButtons).find(btn => btn.dataset.tab === targetId);
+                    return matchingButton && opt.textContent === matchingButton.textContent.trim();
+                });
+                if (optionToSelect) {
+                    tabsSelect.value = optionToSelect.value;
+                }
+            }
+        }
+        
+        // Initial active tab
+        const initialActiveButton = document.querySelector('.' + tabButtonClass + '.active-tab');
+        if (initialActiveButton) {
+            activateTab(initialActiveButton.dataset.tab);
+        }
+
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                activateTab(button.dataset.tab);
+            });
+        });
+        
+        if (tabsSelect) {
+            tabsSelect.addEventListener('change', (event) => {
+                const selectedOptionText = event.target.options[event.target.selectedIndex].textContent;
+                // Find the button whose text content matches the selected option
+                const targetButton = Array.from(tabButtons).find(btn => btn.textContent.trim() === selectedOptionText);
+                if (targetButton) {
+                    activateTab(targetButton.dataset.tab);
+                }
+            });
+        }
+    }
+
+    setupTabs('tab-button', 'tab-content', 'tabs-select');
+    setupTabs('tech-tab-button', 'tech-tab-content', 'tech-tabs-select');
+    setupTabs('collab-tab-button', 'collab-tab-content', 'collab-tabs-select');
+
+
+    // Data for Limitations Chart
+    const limitationsData = {
+        labels: [
+            'Manual Processes', 'Sample-Based Tests', 'Retrospective Nature', 
+            'Inconsistent Controls', 'Data Overload', 'Resource Misallocation'
+        ].map(label => label.length > 16 ? label.substring(0, 16) + '...' : label),
+        datasets: [{
+            label: 'Conceptual Impact',
+            data: [5, 4, 4, 3, 3, 2], // Conceptual scores (e.g., 1-5 scale)
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)',
+                'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)', 'rgba(255, 159, 64, 0.6)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+    const limitationsCtx = document.getElementById('limitationsChart').getContext('2d');
+    new Chart(limitationsCtx, {
+        type: 'bar',
+        data: limitationsData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true, suggestedMax: 5 } },
+            plugins: { legend: { display: false }, title: { display: true, text: 'Impact of Traditional Audit Limitations' } }
+        }
+    });
+
+    // Data for Pain Points Accordion
+    const painPoints = [
+        { title: "Disconnected Systems & Fragmented Data", content: "75 separate ERPs create data silos, hindering a unified view of operations for corporate controllers, tax, and audit groups." },
+        { title: "Complexity & Cost of Managing Multiple ERPs", content: "Significant costs for licensing, maintenance, customization, and integration of 75 ERP systems." },
+        { title: "Data Quality & Consistency Issues", content: "Varied data definitions, standards, and hygiene across ERPs challenge enterprise-level data quality and reliability." },
+        { title: "Inefficiencies in Periodic Audits", content: "Repetitive data extraction and analysis across disparate ERPs is highly inefficient and resource-intensive." },
+        { title: "Challenges in Centralized Oversight", content: "Difficult for corporate groups to exercise effective oversight and ensure consistent policy application across autonomous brands." },
+        { title: "Scalability Issues with Traditional Approaches", content: "Discrete, entity-level audits become unsustainable as the business grows or acquires new entities with potentially new ERPs." }
+    ];
+    const painPointsAccordion = document.getElementById('painPointsAccordion');
+    painPoints.forEach((item, index) => {
+        const buttonId = `accordion-button-${index}`;
+        const contentId = `accordion-content-${index}`;
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <button id="${buttonId}" aria-expanded="false" aria-controls="${contentId}" class="accordion-button w-full flex justify-between items-center text-left p-3 bg-sky-50 hover:bg-sky-100 rounded-md text-sky-700 font-medium focus:outline-none">
+                <span>${item.title}</span>
+                <svg class="w-5 h-5 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div id="${contentId}" class="accordion-content px-3 pt-0 pb-3 text-stone-600 text-sm">
+                ${item.content}
+            </div>
+        `;
+        painPointsAccordion.appendChild(div);
+        const button = document.getElementById(buttonId);
+        button.addEventListener('click', () => {
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded);
+            button.classList.toggle('active');
+            const icon = button.querySelector('svg');
+            icon.classList.toggle('rotate-180');
+        });
+    });
+
+    // Data for AI/ML Models
+    const aiMlModels = [
+        { name: "Supervised Learning", description: "Learns from labeled historical data (e.g., 'fraudulent' vs. 'compliant' transactions) to classify new data. Useful for known patterns.", icon: "🎓" },
+        { name: "Unsupervised Learning", description: "Operates on unlabeled data to discover hidden patterns and anomalies. Ideal for detecting novel fraud or emerging risks. MindBridge uses this.", icon: "🔍" },
+        { name: "Anomaly Detection Algorithms", description: "Statistical methods (Benford's Law, Z-scores) and ML techniques (clustering, neural networks) to identify unusual data points.", icon: "📊" },
+        { name: "Natural Language Processing (NLP)", description: "Analyzes unstructured text (contracts, emails) to extract key info, identify risks, and assess sentiment.", icon: "📜" },
+        { name: "Predictive Analytics", description: "Uses historical data and ML to forecast future trends, identify potential risks, or predict compliance breaches.", icon: "🔮" },
+        { name: "Process Mining", description: "Analyzes event logs from IT systems (like ERPs) to reconstruct actual business processes, discover deviations, and assess control effectiveness.", icon: "⚙️" }
+    ];
+    const aiMlModelsContainer = document.getElementById('aiMlModelsContainer');
+    aiMlModels.forEach(model => {
+        const card = document.createElement('div');
+        card.className = 'bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow';
+        card.innerHTML = `
+            <div class="flex items-center mb-3">
+                <span class="text-3xl mr-3">${model.icon}</span>
+                <h4 class="text-lg font-semibold text-sky-700">${model.name}</h4>
+            </div>
+            <p class="text-sm text-stone-600">${model.description}</p>
+        `;
+        aiMlModelsContainer.appendChild(card);
+    });
+    
+    // Data for Vendor Comparison Table
+    const vendorData = [
+        { category: "Primary AI/ML", mindbridge: "Ensemble AI (stats, unsupervised ML, rules), AI risk scoring.", caseware: "Audit intelligence, ML for risk sampling, text analysis, Benford's.", alteryx: "ML for anomaly ID, predictive risk, GenAI.", auditboard: "Domain-validated GRC models, GenAI, ML for recommendations.", workiva: "GenAI for reporting/GRC, ML for ESG, outlier detection.", diligent: "ML for advanced analysis, Anthropic Claude LLMs.", sap_grc: "Risk analytics, fraud detection.", trullion: "AI/CV for PDF extraction, GenAI (Trulli), AI verification.", azure_synapse: "Integrates with Azure ML for custom models." },
+        { category: "ERP Integration", mindbridge: "Azure Data Factory, APIs, direct connectors (QuickBooks, Sage, Xero, NetSuite GL), Snowflake.", caseware: "Imports PDF, Excel, CSV, 50+ acct. packages, Python, SmartExporter for SAP.", alteryx: "Connects to ERPs, unifies data. Broad connectors (DBs, cloud, some ERPs).", auditboard: "Integrates with GRC ecosystem (HRIS, CRM, acct). NetSuite, Workday integration.", workiva: "Connects to 100s of ERPs (Oracle, SAP, NetSuite). 70+ connectors, APIs.", diligent: "Analytics (ACL) imports from DBs/apps. SAP Connector.", sap_grc: "Optimized for SAP ERPs.", trullion: "Connects to CRM, billing, ERPs. Validis integration.", azure_synapse: "Robust data integration (ingest, prepare, transform), PolyBase." },
+        { category: "Scalability", mindbridge: "Processes 100s of millions of rows. Enterprise scale.", caseware: "Analyzes 100s of thousands of records in minutes. 100% data analysis.", alteryx: "Scalable, handles large data volumes. Governed workflows at scale.", auditboard: "Enterprise-focused, complex auditing needs. Scalable.", workiva: "Flexible & scalable platform. High-quality reporting at scale.", diligent: "Processes large data quickly. Suited for enterprise.", sap_grc: "Designed for large enterprises (esp. SAP).", trullion: "Designed for scaling enterprises. Insights from complex docs at scale.", azure_synapse: "Processes large data; scalable resources (manual). Concurrency limits." },
+        { category: "Strengths (Multi-ERP)", mindbridge: "Strong AI for transactional analysis. API/ADF/Snowflake for diverse data.", caseware: "Established tool (IDEA). Standard audit tests. Python integration.", alteryx: "Powerful data prep, transformation, automation. Integration hub.", auditboard: "Strong GRC workflow. Growing AI. Connects GRC data.", workiva: "Excellent for integrated reporting. Strong ERP connectivity & data prep.", diligent: "Established GRC platform with analytics (ACL). Workflow automation.", sap_grc: "Deep SAP integration. Strong CCM within SAP.", trullion: "AI for document-based accounting (leases, rev rec).", azure_synapse: "Foundational big data platform for custom solutions." },
+        { category: "Limitations (re: 50-75 diverse ERPs)", mindbridge: "Lack of specific large enterprise case studies (50-75 diverse ERPs). Direct connectors limited.", caseware: "AI/ML details vague. Wide ERP integration beyond SAP not explicit for 75 ERPs.", alteryx: "Data mapping/normalization for 50-75 ERPs not detailed. Limited dedicated ERP connectors.", auditboard: "Transactional AI details sparse. Ingestion/mapping for 50-75 ERPs not elaborated.", workiva: "Transactional AI not deeply specified. Ingestion/mapping for 75 ERPs not elaborated.", diligent: "Transactional AI models not detailed. Integration with 50-75 disparate ERPs not specified.", sap_grc: "Primarily SAP-optimized. Limited for non-SAP without custom work.", trullion: "Focus on specific areas. Broad transactional audit across 75 ERPs not detailed.", azure_synapse: "Foundational, not out-of-box audit solution. Requires development." }
+    ];
+    const vendorTableBody = document.getElementById('vendorComparisonTable').getElementsByTagName('tbody')[0];
+    vendorData.forEach(row => {
+        const tr = vendorTableBody.insertRow();
+        tr.insertCell().textContent = row.category;
+        tr.insertCell().textContent = row.mindbridge;
+        tr.insertCell().textContent = row.caseware;
+        tr.insertCell().textContent = row.alteryx;
+        tr.insertCell().textContent = row.auditboard;
+        tr.insertCell().textContent = row.workiva;
+        tr.insertCell().textContent = row.diligent;
+        tr.insertCell().textContent = row.sap_grc;
+        tr.insertCell().textContent = row.trullion;
+        tr.insertCell().textContent = row.azure_synapse;
+    });
+
+    // Data for Technical Requirements Table
+    const techReqData = [
+        { category: "Data Ingestion & Integration", requirement: "Automated extraction from diverse ERPs", importance: "High" },
+        { category: "Data Ingestion & Integration", requirement: "Data mapping and transformation logic", importance: "High" },
+        { category: "Data Storage", requirement: "Scalable central repository (Data Warehouse/Lakehouse)", importance: "High" },
+        { category: "Processing Power", requirement: "Sufficient compute for AI/ML model training/execution", importance: "High" },
+        { category: "Security & Access Control", requirement: "Granular, role-based access control (RBAC)", importance: "High" },
+        { category: "Security & Access Control", requirement: "Data encryption (at rest and in transit)", importance: "High" },
+        { category: "Platform Capabilities", requirement: "AI/ML model development, deployment, management", importance: "High" },
+        { category: "Platform Capabilities", requirement: "Explainable AI (XAI) features", importance: "High" },
+        { category: "Scalability & Reliability", requirement: "Horizontal and vertical scalability of all components", importance: "High" },
+        { category: "Scalability & Reliability", requirement: "High availability and disaster recovery", importance: "High" }
+    ];
+    const techReqTableBody = document.getElementById('techRequirementsTable').getElementsByTagName('tbody')[0];
+    techReqData.forEach(item => {
+        const row = techReqTableBody.insertRow();
+        row.insertCell().textContent = item.category;
+        row.insertCell().textContent = item.requirement;
+        row.insertCell().textContent = item.importance;
+    });
+    
+    // Data for RACI Table
+    const raciData = [
+        { task: "Strategy & Planning", audit: "A", finance: "C", it: "C", data: "C", brand: "C", exec: "A" },
+        { task: "Vendor Selection", audit: "R", finance: "C", it: "C", data: "C", brand: "I", exec: "A" },
+        { task: "Data Discovery & Assessment", audit: "C", finance: "R", it: "R", data: "A", brand: "R", exec: "I" },
+        { task: "Data Integration & Pipeline Dev", audit: "C", finance: "C", it: "R", data: "A", brand: "C", exec: "I" },
+        { task: "Data Mapping & Normalization", audit: "C", finance: "A", it: "I", data: "R", brand: "C", exec: "I" },
+        { task: "AI Model Config/Dev", audit: "R", finance: "C", it: "I", data: "A/R", brand: "I", exec: "I" },
+        { task: "Testing (UAT)", audit: "R", finance: "R", it: "R", data: "R", brand: "C/R", exec: "I" },
+        { task: "Deployment & Go-Live", audit: "C", finance: "C", it: "A", data: "R", brand: "C", exec: "A" },
+        { task: "Change Management & Training", audit: "R", finance: "R", it: "C", data: "C", brand: "R", exec: "A" },
+        { task: "Ongoing Monitoring & Maint.", audit: "C", finance: "I", it: "A", data: "A", brand: "I", exec: "I" },
+        { task: "Alert Management & Investigation", audit: "A", finance: "R", it: "I", data: "C", brand: "R", exec: "I" },
+        { task: "Governance & Oversight", audit: "A", finance: "C", it: "C", data: "C", brand: "I", exec: "A" }
+    ];
+    const raciTableBody = document.getElementById('raciTable').getElementsByTagName('tbody')[0];
+    raciData.forEach(item => {
+        const row = raciTableBody.insertRow();
+        row.insertCell().textContent = item.task;
+        row.insertCell().textContent = item.audit;
+        row.insertCell().textContent = item.finance;
+        row.insertCell().textContent = item.it;
+        row.insertCell().textContent = item.data;
+        row.insertCell().textContent = item.brand;
+        row.insertCell().textContent = item.exec;
+    });
+
+    // Data for Pilot Use Cases Table
+    const pilotCasesData = [
+        { use_case: "Procure-to-Pay Anomalies", risks: "Fraudulent payments, vendor non-compliance, duplicates.", benefits: "High (fraud/error reduction, process optimization).", integration_complexity: "Medium-High", relevance: "High" },
+        { use_case: "Journal Entry Testing", risks: "Financial misstatement, unauthorized/fraudulent entries.", benefits: "High (improved reporting integrity, early manipulation detection).", integration_complexity: "Medium", relevance: "High" },
+        { use_case: "Intercompany Transactions", risks: "Inaccurate consolidated financials, unreconciled balances.", benefits: "High (faster/accurate close, reduced manual effort).", integration_complexity: "High", relevance: "Very High" },
+        { use_case: "Payroll Expense Anomalies", risks: "Payroll fraud (ghost employees), errors.", benefits: "Medium-High (fraud prevention, cost recovery).", integration_complexity: "Medium", relevance: "Medium" }
+    ];
+    const pilotCasesTableBody = document.getElementById('pilotCasesTable').getElementsByTagName('tbody')[0];
+    pilotCasesData.forEach(item => {
+        const row = pilotCasesTableBody.insertRow();
+        row.insertCell().textContent = item.use_case;
+        row.insertCell().textContent = item.risks;
+        row.insertCell().textContent = item.benefits;
+        row.insertCell().textContent = item.integration_complexity;
+        row.insertCell().textContent = item.relevance;
+    });
+
+    // Data for Pilot Focus Chart
+    const pilotFocusData = {
+        labels: ['P2P Anomalies', 'JE Testing', 'Intercompany Trans.', 'Payroll Anomalies'],
+        datasets: [{
+            label: 'Strategic Relevance/Focus',
+            data: [30, 25, 35, 10], // Conceptual weights based on "Relevance" (High, Very High, Medium)
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(255, 99, 132, 0.7)'
+            ],
+            hoverOffset: 4
+        }]
+    };
+    const pilotFocusCtx = document.getElementById('pilotFocusChart').getContext('2d');
+    new Chart(pilotFocusCtx, {
+        type: 'doughnut',
+        data: pilotFocusData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                title: { display: true, text: 'Pilot Use Case Focus Areas' }
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
