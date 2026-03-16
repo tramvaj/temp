@@ -1,0 +1,121 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1a1a1a;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  border-color: #888;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #000;
+}
+
+.category {
+  margin-bottom: 28px;
+}
+
+.categoryTitle {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.categoryTitleLink {
+  cursor: pointer;
+  color: #666;
+  text-decoration: none;
+}
+
+.categoryTitleLink:hover {
+  color: #000;
+}
+
+.nomineeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nominee {
+  padding: 6px 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.winner {
+  font-weight: 600;
+  color: #8B6914;
+}
+
+.winnerBadge {
+  font-size: 12px;
+  margin-left: 6px;
+  color: #B8860B;
+}
+
+.filmLink {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: #ccc;
+  text-underline-offset: 2px;
+}
+
+.filmLink:hover {
+  text-decoration-color: #888;
+}
+
+.filmViewTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+
+.filmViewSubtitle {
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 20px 0;
+}
+
+.noResults {
+  color: #888;
+  font-size: 15px;
+  margin-top: 24px;
+}
