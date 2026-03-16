@@ -1,7 +1,9 @@
+import './globals.css';
 import type { ReactNode } from 'react';
 
 export const metadata = {
-  title: 'Hello World',
+  title: 'Oscars 2026 Explorer',
+  description: 'Browse 2026 Oscar nominees by category or film.',
 };
 
 export default function RootLayout({

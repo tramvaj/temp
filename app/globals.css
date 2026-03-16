@@ -1,0 +1,31 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(255, 248, 236, 0.95), transparent 34%),
+    radial-gradient(circle at top right, rgba(231, 200, 156, 0.42), transparent 28%),
+    linear-gradient(180deg, #f4e9da 0%, #ecdcca 52%, #f7f1e7 100%);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: #a87744;
+  color: #fffaf2;
+}
