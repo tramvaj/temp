@@ -29,3 +29,51 @@ input {
   background: #a87744;
   color: #fffaf2;
 }
+
+.helloContainer {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.helloCard {
+  max-width: 720px;
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  padding: 28px;
+}
+
+.helloEyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.helloCard h1 {
+  margin: 8px 0 10px;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.helloCard p {
+  margin: 0 0 14px;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.helloLink {
+  display: inline-block;
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.helloLink:hover {
+  text-decoration: underline;
+}
