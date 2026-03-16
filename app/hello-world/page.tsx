@@ -150,6 +150,9 @@ export default function HelloWorldPage() {
           <a className={styles.backLink} href="/hello-world/switch">
             Open switch demo
           </a>
+          <a className={styles.backLink} href="/hello-world/portfolio">
+            Open full portfolio page
+          </a>
         </div>
       </section>
     </main>
