@@ -29,14 +29,18 @@ function extractFilm(nominee: string, category: string): string {
     'Best Original Screenplay',
     'Best Adapted Screenplay',
     'Best Original Score',
-    'Best Original Song',
   ];
   if (screenplayCategories.includes(category)) {
     const parts = nominee.split(' - ');
     return parts[0];
   }
+  // For Best Original Song, format is "Song Title - Film Title"
+  if (category === 'Best Original Song') {
+    const parts = nominee.split(' - ');
+    return parts.length > 1 ? parts[parts.length - 1] : nominee;
+  }
   // For everything else, the nominee IS the film
-  return nominee;
+  return nominee.replace(/\s*\(.*?\)\s*$/, '');
 }
 
 // Extract person name from nominee string (the non-film part)
@@ -56,11 +60,15 @@ function extractPerson(nominee: string, category: string): string | null {
     'Best Original Screenplay',
     'Best Adapted Screenplay',
     'Best Original Score',
-    'Best Original Song',
   ];
   if (screenplayCategories.includes(category)) {
     const parts = nominee.split(' - ');
     return parts.length > 1 ? parts.slice(1).join(' - ') : null;
+  }
+  // For Best Original Song, format is "Song Title - Film Title", person is the song title
+  if (category === 'Best Original Song') {
+    const parts = nominee.split(' - ');
+    return parts.length > 1 ? parts[0] : null;
   }
   return null;
 }
@@ -124,9 +132,9 @@ export default function Home() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <a className={styles.backLink} onClick={() => setSelectedFilm(null)}>
+        <button className={styles.backLink} onClick={() => setSelectedFilm(null)}>
           &larr; All categories
-        </a>
+        </button>
         <h2 className={styles.filmViewTitle}>{selectedFilm}</h2>
         <p className={styles.filmViewSubtitle}>
           {wins} win{wins !== 1 ? 's' : ''}, {total} nomination{total !== 1 ? 's' : ''}
@@ -142,12 +150,12 @@ export default function Home() {
                   key={n.category}
                   className={`${styles.nominee} ${n.winner ? styles.winner : ''}`}
                 >
-                  <a
+                  <button
                     className={styles.categoryTitleLink}
                     onClick={() => scrollToCategory(n.category)}
                   >
                     {n.category}
-                  </a>
+                  </button>
                   {person && <span> &middot; {person}</span>}
                   {n.winner && <span className={styles.winnerBadge}>Winner</span>}
                 </li>
@@ -208,14 +216,14 @@ export default function Home() {
                     {person ? (
                       <>
                         {person} &middot;{' '}
-                        <a className={styles.filmLink} onClick={() => setSelectedFilm(film)}>
+                        <button className={styles.filmLink} onClick={() => setSelectedFilm(film)}>
                           {film}
-                        </a>
+                        </button>
                       </>
                     ) : (
-                      <a className={styles.filmLink} onClick={() => setSelectedFilm(film)}>
+                      <button className={styles.filmLink} onClick={() => setSelectedFilm(film)}>
                         {n.nominee}
-                      </a>
+                      </button>
                     )}
                     {n.winner && <span className={styles.winnerBadge}>Winner</span>}
                   </li>
