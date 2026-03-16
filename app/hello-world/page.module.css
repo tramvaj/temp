@@ -272,6 +272,12 @@
   text-decoration: underline;
 }
 
+.pageLinks {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 1024px) {
   .cards,
   .footerColumns,

@@ -143,9 +143,14 @@ export default function HelloWorldPage() {
           <LinkList title="Explore" items={explore} />
           <LinkList title="Resources" items={resources} />
         </div>
-        <a className={styles.backLink} href="/">
-          Back to existing app
-        </a>
+        <div className={styles.pageLinks}>
+          <a className={styles.backLink} href="/">
+            Back to existing app
+          </a>
+          <a className={styles.backLink} href="/hello-world/switch">
+            Open switch demo
+          </a>
+        </div>
       </section>
     </main>
   );
